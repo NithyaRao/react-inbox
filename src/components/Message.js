@@ -32,8 +32,7 @@ return (
       </div>
     </div>
     <div className= {showDivCheckbox}>
-      <span className="label label-warning">{message.labels[0]}</span>
-      <span className="label label-warning">{message.labels[1]}</span>
+    { message.labels.map( (label, i) => <span key={ i } className="label label-warning">{label}</span>) }
       <a href="#">
           { message.subject }
       </a>

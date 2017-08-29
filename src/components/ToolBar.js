@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ToolBar = ({messages, onClickBulkMsg, onClickMarkRead, onClickMarkUnRead, onClickDeleteMsgs, onAddMsgLabel, onRemoveMsgLabel}) => {
+const ToolBar = ({messages, onClickBulkMsg, onClickMarkRead, onClickMarkUnRead, onClickDeleteMsgs, onAddMsgLabel, onRemoveMsgLabel, labelDefault}) => {
 
 const msgUnSelected = messages.every((msg)=> msg.selected !== true)
 const msgSelected = messages.reduce((sum, i) => (sum *= i.selected), 1) >0
@@ -54,7 +54,7 @@ return (
         Mark As Unread
       </button>
 
-      <select className="form-control label-select" defaultValue="" disabled= {disabled} onChange={onSelectAddLabel} >
+      <select className="form-control label-select" value={labelDefault} disabled= {disabled} onChange={onSelectAddLabel} >
         <option value="" disabled >Apply label</option>
         <option value="dev">dev</option>
         <option value="personal">personal</option>
@@ -62,7 +62,7 @@ return (
         <option value="work">work</option>
       </select>
 
-      <select className="form-control label-select" defaultValue="" disabled= {disabled} onChange={onSelectRemoveLabel}>
+      <select className="form-control label-select" value={labelDefault} disabled= {disabled} onChange={onSelectRemoveLabel}>
         <option value="" disabled >Remove label</option>
         <option value="dev">dev</option>
         <option value="personal">personal</option>

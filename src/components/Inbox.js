@@ -66,7 +66,8 @@ const messages = [
 class Inbox extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {messages: messages};
+    this.state = {messages: messages,
+                  labelDefault: ""};
   }
 
   onChangeMsgSelected = ( message) => {
@@ -137,7 +138,8 @@ class Inbox extends React.Component {
                   updatedMessages[key].labels.push(label)
         });
       this.setState({
-        messages: updatedMessages
+        messages: updatedMessages,
+        labelDefault: ""
       });
   }
 
@@ -149,7 +151,8 @@ class Inbox extends React.Component {
           }
         });
       this.setState({
-        messages: updatedMessages
+        messages: updatedMessages,
+        labelDefault: ""
       });
   }
 
@@ -159,7 +162,7 @@ class Inbox extends React.Component {
       <div className="row" >
         <ToolBar messages= {this.state.messages} onClickBulkMsg= {this.onClickBulkMsg} onClickMarkRead= {this.onClickMarkRead}
                             onClickMarkUnRead= {this.onClickMarkUnRead} onClickDeleteMsgs= {this.onClickDeleteMsgs}
-                            onAddMsgLabel= {this.onAddMsgLabel} onRemoveMsgLabel= {this.onRemoveMsgLabel}/>
+                            onAddMsgLabel= {this.onAddMsgLabel} onRemoveMsgLabel= {this.onRemoveMsgLabel} labelDefault= {this.state.labelDefault}/>
         <Messages messages={ this.state.messages } onChangeMsgSelected={ this.onChangeMsgSelected } onClickMsgStarred= {this.onClickMsgStarred}  />
       </div>
   )

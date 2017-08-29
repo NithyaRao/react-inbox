@@ -9,7 +9,7 @@ class App extends Component {
     return (
       <div className="App">
         <div className="container" >
-        <div class="jumbotron">
+        <div className="jumbotron">
           <h1>React Inbox</h1>
           </div>
         <Inbox />
