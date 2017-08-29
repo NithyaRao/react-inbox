@@ -63,7 +63,7 @@ const messages = [
   }
 ]
 
-class Inbox extends React.Component {
+class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {messages: messages,
@@ -177,4 +177,4 @@ class Inbox extends React.Component {
 }
 
 
-export default Inbox
+export default App
