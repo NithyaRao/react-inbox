@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ToolBar = ({messages, onClickBulkMsg, onClickMarkRead, onClickMarkUnRead, onClickDeleteMsgs, onAddMsgLabel, onRemoveMsgLabel, labelDefault}) => {
+const ToolBar = ({messages, onClickBulkMsg, onClickMarkRead, onClickMarkUnRead, onClickDeleteMsgs, onAddMsgLabel, onRemoveMsgLabel, onClickCompose,displayCompose, labelDefault}) => {
 
 const msgUnSelected = messages.every((msg)=> msg.selected !== true)
 const msgSelected = messages.reduce((sum, i) => (sum *= i.selected), 1) >0
@@ -34,6 +34,12 @@ const onSelectRemoveLabel = (e) => {
   const label = e.target.value
   onRemoveMsgLabel(label)
 }
+const onClickPlus = (e) => {
+  e.preventDefault()
+  const currentState = displayCompose;
+  onClickCompose(currentState );
+}
+
 return (
   <div className="row toolbar">
     <div className="col-md-12">
@@ -41,6 +47,10 @@ return (
         <span className="badge badge">  {showUnReadMsgCnt}</span>
         unread messages
       </p>
+
+      <a className="btn btn-danger" onClick= {onClickPlus}>
+            <i className="fa fa-plus"></i>
+      </a>
 
       <button className="btn btn-default" onClick= {onClickIcon}>
         <i className= {showDivIcon} ></i>
