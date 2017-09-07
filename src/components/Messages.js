@@ -1,5 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux'
 import Message from '../components/Message';
+import { checkedMessage } from '../actions'
 
 const Messages = ({messages, onChangeMsgSelected , onClickMsgStarred}) => {
 return (
@@ -8,4 +10,7 @@ return (
     </div>
 )}
 
-export default Messages
+export default connect(
+  null,
+  {onChangeMsgSelected: checkedMessage}
+)(Messages)

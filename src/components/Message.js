@@ -1,4 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { checkedMessage } from '../actions'
+
 
 const Message = ({message, onChangeMsgSelected, onClickMsgStarred}) => {
   const onChange = (e) => {
@@ -41,4 +45,9 @@ return (
 
 )}
 
-export default Message
+export default connect(
+  null,
+  {onChangeMsgSelected: checkedMessage}
+)(Message)
+//
+// export default Message
