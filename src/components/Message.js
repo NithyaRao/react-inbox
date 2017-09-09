@@ -1,22 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { checkedMessage } from '../actions'
+import { checkedMessage, starredMessage } from '../actions'
 
 
-const Message = ({message, onChangeMsgSelected, onClickMsgStarred}) => {
+const Message = ({message, checkedMessage, starredMessage}) => {
   const onChange = (e) => {
-    e.preventDefault()
     let msg = message
     msg.selected= e.target.checked
-    onChangeMsgSelected(msg)
+    checkedMessage(msg)
   }
 
   const onClick = (e) => {
-    e.preventDefault()
     let msg = message
     msg.starred = !message.starred
-    onClickMsgStarred(msg)
+    starredMessage(msg)
   }
 
 const showDivCheckbox = message.selected ? 'col-xs-11 message selected': 'col-xs-11'
@@ -45,9 +43,12 @@ return (
 
 )}
 
+const mapDispatchToProps = dispatch => bindActionCreators({
+  starredMessage,
+  checkedMessage
+}, dispatch)
+
 export default connect(
   null,
-  {onChangeMsgSelected: checkedMessage}
+  mapDispatchToProps
 )(Message)
-//
-// export default Message

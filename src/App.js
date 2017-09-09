@@ -125,7 +125,7 @@ import { connect } from 'react-redux'
     //     return response
     //   }
 
-    const App = ({ messages }) => (
+    const App = ({ messages, displayCompose, labelDefault}) => (
       (!messages.length ) ?  (<div>Loading...</div>) :
       (
           <div className="App">
@@ -134,6 +134,9 @@ import { connect } from 'react-redux'
           <h1>React Inbox</h1>
           </div>
           <div className="row" >
+          <ToolBar messages= {messages}
+          displayCompose= {displayCompose} labelDefault= {labelDefault}/>
+          {displayCompose && <Compose displayCompose= {displayCompose} /> }
           <Messages messages={ messages }  />
           </div>
           </div>
@@ -143,8 +146,8 @@ import { connect } from 'react-redux'
 
 const mapStateToProps = state => ({
   messages: state.messages.all,
-  labelDefault: "",
-  displayCompose: false
+  labelDefault: state.ui.labelDefault,
+  displayCompose: state.ui.displayCompose
 })
 
 const mapDispatchToProps = () => ({})

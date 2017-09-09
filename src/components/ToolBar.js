@@ -1,43 +1,42 @@
 import React from 'react';
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { displaycomposeForm , onClickBulkMsg, onClickMarkRead, onClickMarkUnRead, onClickDeleteMsgs, onAddMsgLabel, onRemoveMsgLabel } from '../actions'
 
-const ToolBar = ({messages, onClickBulkMsg, onClickMarkRead, onClickMarkUnRead, onClickDeleteMsgs, onAddMsgLabel, onRemoveMsgLabel, onClickCompose,displayCompose, labelDefault}) => {
+const ToolBar = ({messages, onClickBulkMsg, onClickMarkRead, onClickMarkUnRead, onClickDeleteMsgs, onAddMsgLabel, onRemoveMsgLabel, displaycomposeForm,displayCompose, labelDefault}) => {
 
 const msgUnSelected = messages.every((msg)=> msg.selected !== true)
 const msgSelected = messages.reduce((sum, i) => (sum *= i.selected), 1) >0
 const showDivIcon = msgSelected? 'fa fa-check-square-o': ( msgUnSelected? 'fa fa-square-o':'fa fa-minus-square-o')
 const showUnReadMsgCnt = messages.reduce((sum, i) => (sum += !i.read*1), 0)
 const disabled = msgUnSelected ? 'disabled' : ''
+const msgIds = messages.filter(msg => Boolean(msg.selected)).map(msg => msg.id)
 
 const onClickIcon = (e) => {
-  e.preventDefault()
   onClickBulkMsg(msgSelected)
 }
 const onClickReadBtn = (e) => {
-  e.preventDefault()
-  onClickMarkRead(true)
+  onClickMarkRead(msgIds)
 }
 const onClickUnReadBtn = (e) => {
-  e.preventDefault()
-  onClickMarkUnRead(false)
+  onClickMarkUnRead(msgIds)
 }
 const onClickDeleteBtn = (e) => {
-  e.preventDefault()
-  onClickDeleteMsgs()
+  onClickDeleteMsgs(msgIds)
 }
 const onSelectAddLabel = (e) => {
-  e.preventDefault()
   const label = e.target.value
-  onAddMsgLabel(label)
+  const msgIds = messages.filter(msg => Boolean(msg.selected && !msg.labels.includes(label)) ).map(msg => msg.id)
+  onAddMsgLabel(msgIds,label)
 }
 const onSelectRemoveLabel = (e) => {
-  e.preventDefault()
   const label = e.target.value
-  onRemoveMsgLabel(label)
+  const msgIds = messages.filter(msg => Boolean(msg.selected && msg.labels.includes(label)) ).map(msg => msg.id)
+  onRemoveMsgLabel(msgIds,label)
 }
 const onClickPlus = (e) => {
-  e.preventDefault()
   const currentState = displayCompose;
-  onClickCompose(currentState );
+  displaycomposeForm(currentState );
 }
 
 return (
@@ -87,4 +86,17 @@ return (
   </div>
 )}
 
-export default ToolBar
+const mapDispatchToProps = dispatch => bindActionCreators({
+  displaycomposeForm,
+  onClickBulkMsg,
+  onClickMarkRead,
+  onClickMarkUnRead,
+  onClickDeleteMsgs,
+  onAddMsgLabel,
+  onRemoveMsgLabel
+}, dispatch)
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(ToolBar)

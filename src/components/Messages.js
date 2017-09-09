@@ -3,14 +3,10 @@ import { connect } from 'react-redux'
 import Message from '../components/Message';
 import { checkedMessage } from '../actions'
 
-const Messages = ({messages, onChangeMsgSelected , onClickMsgStarred}) => {
+const Messages = ({messages }) => {
 return (
     <div className="container">
-     { messages.map( (message, i) => <Message key= { i } message= { message } onChangeMsgSelected= {onChangeMsgSelected} onClickMsgStarred= {onClickMsgStarred} />) }
+     { messages.map( (message, i) => <Message key= { i } message= { message } />) }
     </div>
 )}
-
-export default connect(
-  null,
-  {onChangeMsgSelected: checkedMessage}
-)(Messages)
+ export default Messages

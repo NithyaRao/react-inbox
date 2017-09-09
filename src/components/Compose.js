@@ -1,10 +1,14 @@
 import React from 'react';
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { composeMessage, displaycomposeForm } from '../actions'
 
-const Compose = ({onSubmitCompose}) => {
+const Compose = ({composeMessage, displayCompose, displaycomposeForm}) => {
   const onSubmit = (e) => {
     e.preventDefault()
     let message = { subject: e.target.subject.value, body: e.target.body.value, read: false, starred: false,labels: [] }
-    onSubmitCompose(message)
+    composeMessage(message)
+    displaycomposeForm(displayCompose)
  }
 
 return (
@@ -34,4 +38,12 @@ return (
     </form>
 )}
 
-export default Compose
+const mapDispatchToProps = dispatch => bindActionCreators({
+  composeMessage,
+  displaycomposeForm
+}, dispatch)
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(Compose)
