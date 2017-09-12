@@ -10,12 +10,15 @@ import 'font-awesome/css/font-awesome.css';
 import store from './store';
 import { Provider } from 'react-redux';
 import { fetchMessages, composeMessage } from './actions';
+import { BrowserRouter, Route, Link } from 'react-router-dom'
 
 store.dispatch(fetchMessages())
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+  <BrowserRouter>
+  <Route path="/" component={App} />
+  </BrowserRouter>
   </Provider>,
   document.getElementById('root')
 );
