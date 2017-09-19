@@ -1,12 +1,21 @@
 import React from 'react';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
 import Message from '../components/Message';
-import { checkedMessage } from '../actions'
+import { withRouter } from 'react-router-dom'
 
-const Messages = ({messages }) => {
+const Messages = ({msgs }) => {
 return (
     <div className="container">
-     { messages.map( (message, i) => <Message key= { i } message= { message } />) }
+     { msgs.map( (message, i) => <Message key= { i } message= { message } />) }
     </div>
 )}
- export default Messages
+
+const mapStateToProps = state => ({
+  msgs: state.messages.all
+})
+const mapDispatchToProps = () => ({})
+
+export default withRouter (connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Messages))

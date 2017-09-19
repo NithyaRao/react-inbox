@@ -1,15 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { composeMessage, displaycomposeForm } from '../actions'
+import { composeMessage } from '../actions'
+import { withRouter, Redirect , Route, Link} from 'react-router-dom'
 
-const Compose = ({composeMessage, displayCompose, displaycomposeForm}) => {
+const Compose = ({composeMessage, displayCompose, displaycomposeForm, history} ) => {
+
   const onSubmit = (e) => {
     e.preventDefault()
     let message = { subject: e.target.subject.value, body: e.target.body.value, read: false, starred: false,labels: [] }
-    composeMessage(message)
-    displaycomposeForm(displayCompose)
- }
+    composeMessage(message, history, displayCompose)
+}
 
 return (
     <form className="form-horizontal well" onSubmit= {onSubmit} >
@@ -31,19 +32,19 @@ return (
         </div>
       </div>
       <div className="form-group">
-        <div className="col-sm-8 col-sm-offset-2">
           <input type="submit" value="Send" className="btn btn-primary"></input>
-        </div>
       </div>
     </form>
 )}
 
+const mapStateToProps = state => ({
+  displayCompose: state.ui.displayCompose
+})
 const mapDispatchToProps = dispatch => bindActionCreators({
   composeMessage,
-  displaycomposeForm
 }, dispatch)
 
-export default connect(
-  null,
+export default withRouter ( connect(
+  mapStateToProps,
   mapDispatchToProps
-)(Compose)
+)(Compose))

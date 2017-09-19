@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { displaycomposeForm , onClickBulkMsg, onClickMarkRead, onClickMarkUnRead, onClickDeleteMsgs, onAddMsgLabel, onRemoveMsgLabel } from '../actions'
-
-const ToolBar = ({messages, onClickBulkMsg, onClickMarkRead, onClickMarkUnRead, onClickDeleteMsgs, onAddMsgLabel, onRemoveMsgLabel, displaycomposeForm,displayCompose, labelDefault}) => {
+import { displaycomposeForm ,onClickBulkMsg, onClickMarkRead, onClickMarkUnRead, onClickDeleteMsgs, onAddMsgLabel, onRemoveMsgLabel } from '../actions'
+import { Link, Route, Switch, withRouter} from 'react-router-dom'
+const ToolBar = ({messages, onClickBulkMsg, onClickMarkRead, onClickMarkUnRead, onClickDeleteMsgs, onAddMsgLabel, onRemoveMsgLabel, displaycomposeForm,displayMsgBody,displayCompose, labelDefault, history}) => {
 
 const msgUnSelected = messages.every((msg)=> msg.selected !== true)
 const msgSelected = messages.reduce((sum, i) => (sum *= i.selected), 1) >0
@@ -12,18 +12,6 @@ const showUnReadMsgCnt = messages.reduce((sum, i) => (sum += !i.read*1), 0)
 const disabled = msgUnSelected ? 'disabled' : ''
 const msgIds = messages.filter(msg => Boolean(msg.selected)).map(msg => msg.id)
 
-const onClickIcon = (e) => {
-  onClickBulkMsg(msgSelected)
-}
-const onClickReadBtn = (e) => {
-  onClickMarkRead(msgIds)
-}
-const onClickUnReadBtn = (e) => {
-  onClickMarkUnRead(msgIds)
-}
-const onClickDeleteBtn = (e) => {
-  onClickDeleteMsgs(msgIds)
-}
 const onSelectAddLabel = (e) => {
   const label = e.target.value
   const msgIds = messages.filter(msg => Boolean(msg.selected && !msg.labels.includes(label)) ).map(msg => msg.id)
@@ -34,10 +22,6 @@ const onSelectRemoveLabel = (e) => {
   const msgIds = messages.filter(msg => Boolean(msg.selected && msg.labels.includes(label)) ).map(msg => msg.id)
   onRemoveMsgLabel(msgIds,label)
 }
-const onClickPlus = (e) => {
-  const currentState = displayCompose;
-  displaycomposeForm(currentState );
-}
 
 return (
   <div className="row toolbar">
@@ -46,20 +30,30 @@ return (
         <span className="badge badge">  {showUnReadMsgCnt}</span>
         unread messages
       </p>
+      <Switch>
+        <Route exact path='/compose' render= { () => (
+          <Link className="btn btn-danger" to='/'>
+                <i className="fa fa-plus"></i>
+          </Link>
+        )
+        }/>
+        <Route path='/' render= { () => (
+          <Link className="btn btn-danger" to='/compose'>
+                <i className="fa fa-plus"></i>
+          </Link>
+        )
+        }/>
+      </Switch>
 
-      <a className="btn btn-danger" onClick= {onClickPlus}>
-            <i className="fa fa-plus"></i>
-      </a>
-
-      <button className="btn btn-default" onClick= {onClickIcon}>
+      <button className="btn btn-default" onClick= {() => onClickBulkMsg(msgSelected)}>
         <i className= {showDivIcon} ></i>
       </button>
 
-      <button className="btn btn-default" disabled= {disabled} onClick= {onClickReadBtn}>
+      <button className="btn btn-default" disabled= {disabled} onClick= {() => onClickMarkRead(msgIds)}>
         Mark As Read
       </button>
 
-      <button className="btn btn-default" disabled= {disabled} onClick= {onClickUnReadBtn}>
+      <button className="btn btn-default" disabled= {disabled} onClick= {() => onClickMarkUnRead(msgIds, history)}>
         Mark As Unread
       </button>
 
@@ -79,12 +73,18 @@ return (
         <option value="work">work</option>
       </select>
 
-      <button className="btn btn-default" disabled= {disabled} onClick= {onClickDeleteBtn}>
+      <button className="btn btn-default" disabled= {disabled} onClick= {() => onClickDeleteMsgs(msgIds)}>
         <i className="fa fa-trash-o" ></i>
       </button>
     </div>
   </div>
 )}
+
+const mapStateToProps = state => ({
+  messages: state.messages.all,
+  displayCompose: state.ui.displayCompose,
+  labelDefault: state.ui.labelDefault
+})
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   displaycomposeForm,
@@ -96,7 +96,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onRemoveMsgLabel
 }, dispatch)
 
-export default connect(
-  null,
+export default withRouter(connect(
+  mapStateToProps,
   mapDispatchToProps
-)(ToolBar)
+)(ToolBar))

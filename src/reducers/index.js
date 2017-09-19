@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { MESSAGE_COMPOSED , MESSAGES_RECEIVED, MESSAGE_CHECKED, MESSAGE_STARRED, MESSAGE_MARKREAD,MESSAGE_MARKUNREAD,MESSAGE_DELETE,MESSAGE_ADDLABEL,MESSAGE_REMOVELABEL,MESSAGE_CLICKALL, DISPLAY_COMPOSE, } from '../actions'
+import { MESSAGE_COMPOSED , MESSAGES_RECEIVED,MESSAGEID_RECEIVED, MESSAGE_CHECKED, MESSAGE_STARRED, MESSAGE_MARKREAD,MESSAGE_MARKUNREAD,MESSAGE_DELETE,MESSAGE_ADDLABEL,MESSAGE_REMOVELABEL,MESSAGE_CLICKALL, DISPLAY_COMPOSE,DISPLAY_MSGBODY } from '../actions'
 
 function messages(state = { all: [] }, action) {
   switch (action.type) {
@@ -8,6 +8,7 @@ function messages(state = { all: [] }, action) {
         ...state,
         all: action.messages
       }
+
     case MESSAGE_COMPOSED:
       return {
         ...state,
@@ -61,12 +62,7 @@ function messages(state = { all: [] }, action) {
          all: markreadMessages
        }
     case MESSAGE_MARKUNREAD:
-    let markunreadMessages = state.all.map(msg => {
-        if (action.msgIds.includes(msg.id)){
-          return { ...msg, read: false }
-        }
-        return msg
-      })
+    let markunreadMessages = state.all.map(msg => action.msgIds.includes(msg.id)? {...msg, read: false }: msg )
      return {
         ...state,
         all: markunreadMessages
@@ -108,7 +104,16 @@ function messages(state = { all: [] }, action) {
   }
 }
 
-function ui(state = { labelDefault: "", displayCompose: false }, action) {
+function message(state = [] , action) {
+  switch(action.type) {
+    case MESSAGEID_RECEIVED:
+      return action.message
+    default:
+    return state
+  }
+}
+
+function ui(state = { labelDefault: "", displayCompose: false, displayMsgBody: true }, action) {
   switch (action.type) {
       case DISPLAY_COMPOSE:
         return {
@@ -122,5 +127,6 @@ function ui(state = { labelDefault: "", displayCompose: false }, action) {
 
 export default combineReducers({
  messages,
- ui
+ ui,
+ message
 })
