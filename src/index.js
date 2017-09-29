@@ -11,6 +11,8 @@ import store from './store';
 import { Provider } from 'react-redux';
 import { fetchMessages } from './actions';
 import { BrowserRouter, Route } from 'react-router-dom'
+import 'core-js/es6/map';
+import 'core-js/es6/set';
 
 store.dispatch(fetchMessages())
 

@@ -5,7 +5,7 @@ import MessageBody from '../components/MessageBody';
 import { checkedMessage, starredMessage  } from '../actions'
 import { withRouter,Route, Link} from 'react-router-dom'
 
-const Message = ({message, checkedMessage,starredMessage}) => {
+export function Message ({message, checkedMessage,starredMessage}) {
   const onChange = (e) => {
     let msg = message
     msg.selected= e.target.checked
