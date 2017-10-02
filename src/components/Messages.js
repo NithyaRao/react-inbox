@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Message from '../components/Message';
 import { withRouter } from 'react-router-dom'
 
-const Messages = ({msgs }) => {
+export function Messages({msgs }) {
 return (
     <div className="container">
      { msgs.map( (message, i) => <Message key= { i } message= { message } />) }

@@ -2,7 +2,6 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import {Message} from './Message';
 
-
 describe('Test Message Component', () => {
 const message = {
         subject: 'Hi',
@@ -31,7 +30,7 @@ const message = {
    );
      const divs=  renderedComponent.find('div')
      expect(divs).toHaveLength(7)
-     expect(divs.nodes[1].props.className.includes('row message read')).toEqual(true)
+     expect(divs.get(1).props.className.includes('row message read')).toEqual(true)
  });
 
  it('should have Div className row message unread when message is unread and not selected', () => {
@@ -41,7 +40,7 @@ const message = {
    );
      const divs=  renderedComponent.find('div')
      expect(divs).toHaveLength(7)
-     expect(divs.nodes[1].props.className.includes('row message unread')).toEqual(true)
+     expect(divs.get(1).props.className.includes('row message unread')).toEqual(true)
  });
 
  it('should have Div className row message selected read when message is read and selected', () => {
@@ -52,7 +51,7 @@ const message = {
    );
      const divs=  renderedComponent.find('div')
      expect(divs).toHaveLength(7)
-     expect(divs.nodes[1].props.className.includes('row message selected read')).toEqual(true)
+     expect(divs.get(1).props.className.includes('row message selected read')).toEqual(true)
  });
 
  it('should have Div className row message selected unread when message is unread and selected', () => {
@@ -63,7 +62,7 @@ const message = {
    );
      const divs=  renderedComponent.find('div')
      expect(divs).toHaveLength(7)
-     expect(divs.nodes[1].props.className.includes('row message selected unread')).toEqual(true)
+     expect(divs.get(1).props.className.includes('row message selected unread')).toEqual(true)
  });
 
  it('should have a icon with className star fa fa-star when messages is starred', () => {
@@ -72,7 +71,7 @@ const message = {
    );
    const icon = renderedComponent.find('i')
    expect(icon).toHaveLength(1)
-   expect(icon.node.props.className.includes('star fa fa-star')).toEqual(true)
+   expect(icon).toHaveClassName('star fa fa-star')
 
  });
 
@@ -83,7 +82,7 @@ const message = {
    );
    const icon = renderedComponent.find('i')
    expect(icon).toHaveLength(1)
-   expect(icon.node.props.className.includes('star fa fa-star-o')).toEqual(true)
+   expect(icon).toHaveClassName('star fa fa-star-o')
 
  });
 
