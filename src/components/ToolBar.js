@@ -3,7 +3,8 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { displaycomposeForm ,onClickBulkMsg, onClickMarkRead, onClickMarkUnRead, onClickDeleteMsgs, onAddMsgLabel, onRemoveMsgLabel } from '../actions'
 import { Link, Route, Switch, withRouter} from 'react-router-dom'
-const ToolBar = ({messages, onClickBulkMsg, onClickMarkRead, onClickMarkUnRead, onClickDeleteMsgs, onAddMsgLabel, onRemoveMsgLabel, displaycomposeForm,displayMsgBody,displayCompose, labelDefault, history}) => {
+
+export function ToolBar({messages, onClickBulkMsg, onClickMarkRead, onClickMarkUnRead, onClickDeleteMsgs, onAddMsgLabel, onRemoveMsgLabel, displaycomposeForm,displayMsgBody,displayCompose, labelDefault, history}) {
 
 const msgUnSelected = messages.every((msg)=> msg.selected !== true)
 const msgSelected = messages.reduce((sum, i) => (sum *= i.selected), 1) >0
