@@ -50,7 +50,7 @@ return (
         <i className= {showDivIcon} ></i>
       </button>
 
-      <button className="btn btn-default" disabled= {disabled} onClick= {() => onClickMarkRead(msgIds)}>
+      <button  className="btn btn-default" disabled= {disabled} onClick= {() => onClickMarkRead(msgIds)}>
         Mark As Read
       </button>
 
@@ -74,7 +74,7 @@ return (
         <option value="work">work</option>
       </select>
 
-      <button className="btn btn-default" disabled= {disabled} onClick= {() => onClickDeleteMsgs(msgIds)}>
+      <button id= "del-btn" title= "del-btn" className="btn btn-default" disabled= {disabled} onClick= {() => onClickDeleteMsgs(msgIds)}>
         <i className="fa fa-trash-o" ></i>
       </button>
     </div>

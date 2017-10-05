@@ -151,7 +151,7 @@ export function showMsgBody(message){
    })
    response = await fetch(`${message._links.self.href}`)
    const jsonMsg = await response.json()
-   dispatch({
+     dispatch({
      type: MESSAGEID_RECEIVED,
      message: jsonMsg
    })
