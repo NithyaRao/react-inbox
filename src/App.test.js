@@ -15,6 +15,11 @@ const mockStore = configureMockStore(middlewares)
 const checkedMessage = jest.fn();
 const starredMessage = jest.fn();
 const msgs = [ {
+        "_links": {
+          "self": {
+            "href": `${process.env.REACT_APP_API_URL}/api/messages/1`
+          }
+        },
         id: 1,
         subject: 'Hi',
         starred: true,
@@ -22,6 +27,11 @@ const msgs = [ {
         labels: ['dev', 'personal'],
       },
       {
+        "_links": {
+          "self": {
+            "href": `${process.env.REACT_APP_API_URL}/api/messages/2`
+          }
+        },
         id: 2,
         subject: 'Hello',
         starred: false,
@@ -29,6 +39,11 @@ const msgs = [ {
         labels: ['dev', 'work'],
       },
       {
+        "_links": {
+          "self": {
+            "href": `${process.env.REACT_APP_API_URL}/api/messages/3`
+          }
+        },
         id: 3,
         subject: 'Hi',
         starred: true,
@@ -69,6 +84,7 @@ it('renders without crashing', () => {
 
 it('mounts the app and renders 3 messages', () => {
   fetchMock.get(`${process.env.REACT_APP_API_URL}/api/messages/2`, {
+    "body" : {
     "_links": {
     "self": {
     "href": "http://localhost:8082/api/messages/2"
@@ -82,24 +98,25 @@ it('mounts the app and renders 3 messages', () => {
     "dev",
     "personal"
     ],
-    "body": "Hey, it's Virginia Mosby,\n\nThe littlest thing can cause a ripple effect that changes your life."
-  })
+    "body": "foo"
+  }})
 fetchMock.patch(`${process.env.REACT_APP_API_URL}/api/messages`, {
-  "_links": {
-  "self": {
-  "href": "http://localhost:8082/api/messages/2"
-  }
-  },
-  "id": 1,
-  "subject": "You can't input the protocol without calculating the mobile RSS protocol!",
-  "starred": true,
-  "read": true,
-  "labels": [
-  "dev",
-  "personal"
-  ],
-  "body": "Hey, it's Virginia Mosby,\n\nThe littlest thing can cause a ripple effect that changes your life."
-} )
+  "body" : {
+      "_links": {
+      "self": {
+      "href": "http://testhost.example.com/api/messages/2"
+      }
+      },
+      "id": 1,
+      "subject": "You can't input the protocol without calculating the mobile RSS protocol!",
+      "starred": true,
+      "read": true,
+      "labels": [
+      "dev",
+      "personal"
+      ],
+      "body": "Hey, it's Virginia Mosby,\n\nThe littlest thing can cause a ripple effect that changes your life."
+} })
   const renderedComponent = mount(  <Provider store={store}>
       <MemoryRouter initialEntries = {[ '/messages/2']}>
          <App />
