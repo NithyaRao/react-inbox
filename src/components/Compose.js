@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux'
 import { composeMessage } from '../actions'
 import { withRouter, Redirect , Route, Link} from 'react-router-dom'
 
-const Compose = ({composeMessage, displayCompose, displaycomposeForm, history} ) => {
+export function Compose ({composeMessage, displayCompose, displaycomposeForm, history} )  {
 
   const onSubmit = (e) => {
     e.preventDefault()

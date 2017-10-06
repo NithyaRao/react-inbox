@@ -5,29 +5,6 @@ import fetchMock from 'fetch-mock'
 
 const middlewares = [ thunk ]
 const mockStore = configureMockStore(middlewares)
-const msgs = [ {
-        id: 1,
-        subject: 'Hi',
-        starred: true,
-        read: true,
-        labels: ['dev', 'personal'],
-      },
-      {
-        id: 2,
-        subject: 'Hello',
-        starred: false,
-        read: false,
-        labels: ['dev', 'work'],
-      },
-      {
-        id: 3,
-        subject: 'Hi',
-        starred: true,
-        selected: true,
-        read: true,
-        labels: ['dev'],
-      }
-]
 
 const messages = [ {"_links": {
   "self": {
@@ -100,11 +77,7 @@ describe('async actions', () => {
       { type: actions.MESSAGE_MARKREAD , msgIds: [2]},
       { type: actions.MESSAGEID_RECEIVED , message: messages[1] }
     ]
-    const store = mockStore( {
-      messages: { all: msgs },
-      ui: { labelDefault: '', displayCompose: false, displayMsgBody: true },
-      message: []
-   } )
+    const store = mockStore( {} )
 
     await store.dispatch(actions.showMsgBody(messages[1]))
     expect(store.getActions()).toEqual(expectedActions)

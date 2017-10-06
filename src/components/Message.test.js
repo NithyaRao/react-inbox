@@ -90,6 +90,7 @@ const message = {
    const renderedComponent = shallow(
         <Message {...props}/>
    );
+   console.log(renderedComponent.debug())
      expect(renderedComponent.containsMatchingElement(
            <input type="checkbox" />
        )).toEqual(true);
@@ -113,3 +114,14 @@ const message = {
     // console.log(renderedComponent.node)
    });
  });
+
+
+// function wrapIt(node) {
+// return(
+//   <Provider >
+//     {node}
+//   </Provider>
+// )
+// }
+//
+// in code use wrapit(<Message /> )

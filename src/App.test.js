@@ -68,8 +68,40 @@ it('renders without crashing', () => {
 });
 
 it('mounts the app and renders 3 messages', () => {
+  fetchMock.get(`${process.env.REACT_APP_API_URL}/api/messages/2`, {
+    "_links": {
+    "self": {
+    "href": "http://localhost:8082/api/messages/2"
+    }
+    },
+    "id": 1,
+    "subject": "You can't input the protocol without calculating the mobile RSS protocol!",
+    "starred": true,
+    "read": true,
+    "labels": [
+    "dev",
+    "personal"
+    ],
+    "body": "Hey, it's Virginia Mosby,\n\nThe littlest thing can cause a ripple effect that changes your life."
+  })
+fetchMock.patch(`${process.env.REACT_APP_API_URL}/api/messages`, {
+  "_links": {
+  "self": {
+  "href": "http://localhost:8082/api/messages/2"
+  }
+  },
+  "id": 1,
+  "subject": "You can't input the protocol without calculating the mobile RSS protocol!",
+  "starred": true,
+  "read": true,
+  "labels": [
+  "dev",
+  "personal"
+  ],
+  "body": "Hey, it's Virginia Mosby,\n\nThe littlest thing can cause a ripple effect that changes your life."
+} )
   const renderedComponent = mount(  <Provider store={store}>
-      <MemoryRouter>
+      <MemoryRouter initialEntries = {[ '/messages/2']}>
          <App />
       </MemoryRouter>
       </Provider>);

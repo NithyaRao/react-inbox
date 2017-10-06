@@ -15,3 +15,6 @@ const store = createStore(
 )
 
 export default store
+
+// can pass APi to thunkMiddleware as extra
+// thunkMiddleware.withExtraArgument({Api})
